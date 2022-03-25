@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    setInterval(function () {
+        for (let i = 0; i < 100; i++) {
+            $.get("http://localhost:8700/auth/test", function (data) {
+                console.log(data);
+            });
+            $.get("http://localhost:8700/auth/test", function (data) {
+                console.log(data);
+            });
+            $.get("http://localhost:8700/auth/test", function (data) {
+                console.log(data);
+            });
+            $.get("http://localhost:8700/auth/test", function (data) {
+                console.log(data);
+            });
+            $.get("http://localhost:8700/auth/test", function (data) {
+                console.log(data);
+            });
+        }
+
+    }, 1000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: vote-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 195d0ea0-edf2-4432-a828-a2a23a7b309e
+    alibaba:
+      seata:
+        tx-service-group: tx_service_jianmu_pingxuan_group
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/brand_official?useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useUnicode=true
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+      hikari: # 全局hikariCP参数，所有值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+        #空闲超时时间（毫秒）只有在minimumIdle<maximumPoolSize时候生效，超时的可能被回收，数值0表示空闲连接永不回收
+        idle-timeout: 10000
+        #连接池中的连接的最长生命周期（毫秒），此参数必须小于数据库连接的最大空闲时间（time_wait），数值0表示不限制
+        max-lifetime: 30000
+        #连接池中可同时连接的最大连接数当池中没有空闲连接可用时，就会阻塞直到超出connectionTimeout设定的数值
+        max-pool-size: 10
+        min-idle: 5
+dubbo:
+  scan:
+    base-packages: com.jianmu.dubbo.api.impl
+  protocol:
+    name: dubbo
+    port: 20881
+  registry:
+    address: nacos://127.0.0.1:8848
+  cloud:
+    subscribed-services: vote-api
+  config-center:
+    namespace: 195d0ea0-edf2-4432-a828-a2a23a7b309e
+
+seata:
+  application-id: seata-server
+  tx-service-group: tx_service_default_group
+  service:
+    vgroup-mapping:
+      tx_service_default_group: default
+
+logging:
+  level:
+    root: info
+    web: info
+    com.jianmu: debug
